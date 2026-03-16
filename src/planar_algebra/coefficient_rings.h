@@ -39,13 +39,13 @@ class Monomial {
         bool isNonZero() const;
         Monomial<coeff_tpl> operator*(const Monomial_t&) const;
 
-        Monomial<coeff_tpl>() { throw; }
-        Monomial<coeff_tpl>(int x) : coefficient(x) { assert(x != 0); }
-        Monomial<coeff_tpl>(const Monomial_t &x, const Monomial_t &y)
+        Monomial() { throw; }
+        Monomial(int x) : coefficient(x) { assert(x != 0); }
+        Monomial(const Monomial_t &x, const Monomial_t &y)
             : exponents(x.exponents), coefficient(x.coefficient) {
                 coefficient += y.coefficient;
             }
-        Monomial<coeff_tpl>(const std::vector<int16_t>
+        Monomial(const std::vector<int16_t>
                 exponents, const coeff_tpl &coefficient_) :
             exponents(exponents), coefficient(coefficient_) { }
         friend std::ostream& operator<<(std::ostream &os,
@@ -103,12 +103,12 @@ class Polynomial {
 
         const mpz_t* getmpz_t() const { throw; }
 
-        Polynomial<coeff_tpl>() { }
-        explicit Polynomial<coeff_tpl>(const Monomial_t& r) {
+        Polynomial() { }
+        explicit Polynomial(const Monomial_t& r) {
             if (r.isNonZero())
                 monoms.push_back(r);
         }
-        Polynomial<coeff_tpl>(int x) {
+        Polynomial(int x) {
            if (x)
                monoms.emplace_back(x);
         }
@@ -118,7 +118,7 @@ class Polynomial {
             return coeff_tpl::coefficientTypeToUint();
         }
         void writeToBin(std::ofstream &) const { throw; }
-        explicit Polynomial<coeff_tpl>(std::ifstream &) { throw; }
+        explicit Polynomial(std::ifstream &) { throw; }
 
         void inv();
         void switchSign();
@@ -260,12 +260,12 @@ class FF {
 
         const mpz_t* getmpz_t() const { throw; }
 
-        FF<val_tpl>() : FF<val_tpl>(1) { }
-        explicit FF<val_tpl>(const int &other) :
+        FF() : FF<val_tpl>(1) { }
+        explicit FF(const int &other) :
             val( ((other < 0) ? p : 0) + (other % p)) {
                 assert(other < (int)(1 << 8*sizeof(val_tpl)));
             }
-        explicit FF<val_tpl>(std::ifstream &f) { readFromBinTpl(f, val); }
+        explicit FF(std::ifstream &f) { readFromBinTpl(f, val); }
 
         bool isNonZero() const { return val; }
         bool isInvertible() const { return isNonZero(); }
