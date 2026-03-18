@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 
 #
 #    binToHuman.py --- Part of khoca, a knot homology calculator
@@ -34,7 +34,6 @@ uint32_t = 32
 def myRead(size):
 	assert(size % 8 == 0)
 	return int.from_bytes(sys.stdin.buffer.read(int(abs(size / 8))), byteorder='little', signed=(size < 0))
-
 
 def krasnerTangle(boundarySize, indent):
 	print("  " * indent + "Tangle: Q-shift = " + str(myRead(qShift_t)) + " + " + str(myRead(qShift_t)) + "*N, " + str(myRead(boundary_t)) + " circles.")
@@ -113,4 +112,8 @@ def complex(indent):
 	for i in range(size - 1):
 		matLCCobos(indent + 2, coefficientRing)
 
-complex(0)
+def main():
+    complex(0)
+
+if __name__ == "__main__":
+    main()

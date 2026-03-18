@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 
 #
 #    humanToBin.py --- Part of khoca, a knot homology calculator
@@ -19,9 +19,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-
-
-import sys, re, math
+import math
+import sys
+import re
 
 qShift_t = -16
 tShift_t = qShift_t
@@ -48,7 +48,6 @@ def mpirUInt(x):
 		size = int(math.log(x, 256)) + 1
 		myWrite(size, 8)
 		myWrite(x, size * 8)
-	
 
 def mpirRat(coefficientRing):
 	if (coefficientRing == 0):
@@ -74,14 +73,12 @@ def mpirRat(coefficientRing):
 		x = nlist.pop(0)
 		myWrite(x, 16)
 
-
 def krasnerTangle(dataSize):
 	myPop(qShift_t) # get qShift
 	myPop(qShift_t) # get qShift times N
 	myPop(boundary_t) # get Circle coun
 	for i in range(dataSize):
 		myPop(boundary_t)
-
 
 def vecTangles(boundarySize):
 	tanglesSize = myPop(vidx2_t)
@@ -93,7 +90,7 @@ def vecTangles(boundarySize):
 
 def krasnerCobo(coefficientRing):
 	mpirRat(coefficientRing)
-	
+
 	size = myPop(boundary_t)
 	for i in range(size):
 		myPop(dot_t)
@@ -127,5 +124,9 @@ def complex():
 	for i in range(complexSize - 1):
 		matLCCobos(coefficientRing)
 
-nlist = [int(i) for i in re.findall(r'-?\d+', sys.stdin.read())];
-complex()
+def main():
+    nlist = [int(i) for i in re.findall(r'-?\d+', sys.stdin.read())];
+    complex()
+
+if __name__ == "__main__":
+    main()
