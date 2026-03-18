@@ -62,6 +62,7 @@ class InteractiveCalculator:
         True
         >>>
     """
+
     def __init__(self, coefficient_ring=0, frobenius_algebra=(0, 0), root=0, equivariant=None):
         r"""
         Constructor.
@@ -99,35 +100,35 @@ class InteractiveCalculator:
             try:
                 self._coefficient_ring = str(int(coefficient_ring))
             except TypeError:
-                raise TypeError('Coefficient ring must be declared by an integer or string')
+                raise TypeError("Coefficient ring must be declared by an integer or string")
         if type(frobenius_algebra) == str:
             self._frobenius_algebra = frobenius_algebra
         else:
             try:
-                self._frobenius_algebra = '%s' %list(frobenius_algebra)
+                self._frobenius_algebra = "%s" % list(frobenius_algebra)
             except TypeError:
-                raise TypeError('Frobenius algebra must be declared by a tuple, list or string')
+                raise TypeError("Frobenius algebra must be declared by a tuple, list or string")
         if type(root) == str:
             self._root = root
         else:
             try:
                 self._root = str(int(root))
             except TypeError:
-                raise TypeError('Root must be declared by an integer or string')
+                raise TypeError("Root must be declared by an integer or string")
 
         self._equivariant = None
         if equivariant:
             try:
-                 equivariant = int(equivariant)
+                equivariant = int(equivariant)
             except TypeError:
-                raise TypeError('equivariant must be given as integer')
+                raise TypeError("equivariant must be given as integer")
             if equivariant <= 1:
-                raise ValueError('equivariant must be larger than 1')
-            self._equivariant = 'e%s' %equivariant
+                raise ValueError("equivariant must be larger than 1")
+            self._equivariant = "e%s" % equivariant
 
         self._description = None
         self._stack = PyComplexStack()
-        self('braidaA', ' ') # sets self._description
+        self("braidaA", " ")  # sets self._description
 
     def __repr__(self):
         r"""
@@ -139,8 +140,7 @@ class InteractiveCalculator:
             >>> InteractiveCalculator(5, (1, 0), 0)
             Khovanov homology calculator for Frobenius algebra: F_5[X] / (1*X^2 + 1).
         """
-        return 'Khovanov homology calculator for %s' %self._description
-
+        return "Khovanov homology calculator for %s" % self._description
 
     def __call__(self, link, command=None, print_messages=False, verbose=False, progress=False):
         r"""
@@ -253,42 +253,43 @@ class InteractiveCalculator:
             arg_list.append(self._frobenius_algebra)
         arg_list.append(self._root)
 
-
         if type(link) in (tuple, list):
             # Allow more Python like ways to declare the link
             try:
                 link_list = [int(j) for j in link]
                 # interpreted as braid in Tietze-form
-                offset = {-1:64, 1:96}
+                offset = {-1: 64, 1: 96}
                 from math import copysign
-                link_knotscape = ''
+
+                link_knotscape = ""
                 for j in link_list:
-                    link_knotscape += chr(abs(j) + offset[copysign(1,j)])
-                link = 'braid' + link_knotscape
+                    link_knotscape += chr(abs(j) + offset[copysign(1, j)])
+                link = "braid" + link_knotscape
             except TypeError:
                 try:
                     link_list = [list(j) for j in link]
                     # interpreted as pd-Code
-                    link = 'pd' + str(link_list)
+                    link = "pd" + str(link_list)
                 except TypeError:
                     pass
 
         arg_list.append(link)
 
         if not command:
-            command = 'calc0'
+            command = "calc0"
         cmd_list = command.split()
         arg_list += cmd_list
 
         # redirect print outputs to a list to
         # return it optionally to the user
         print_output = []
+
         def no_print(s):
             print_output.append(s)
 
         if verbose:
             if print_messages:
-                raise ValueError('All messages are printed in verbose mode')
+                raise ValueError("All messages are printed in verbose mode")
             with self._stack:
                 res = run_commandline(arg_list, print, progress)
             return res
@@ -297,6 +298,7 @@ class InteractiveCalculator:
         # and use the to set the description resp.
         # return it optionally to the user
         import py
+
         capture = py.io.StdCaptureFD(err=False, in_=False)
 
         try:
@@ -308,10 +310,10 @@ class InteractiveCalculator:
 
         out, err = capture.reset()
         if not self._description and out:
-            self._description = out.strip('\n')
+            self._description = out.strip("\n")
 
         if print_messages:
-            if  out:
+            if out:
                 print_output += [out][:-1]
             return res, print_output
         return res
@@ -328,4 +330,5 @@ class InteractiveCalculator:
             True
         """
         from khoca._version import version
+
         return version
