@@ -10,20 +10,11 @@
 #
 # We can upload with `twine upload -r pypi dist/khoca-...tar.gz`.
 
-import glob, os
-
-
-# Without the next line, we get an error even though we never
-# use distutils as a symbol
-from setuptools import distutils
-
-from distutils.core import Extension
-from setuptools import setup
-from Cython.Build import cythonize
+import os.path
 from platform import system
 
-join = os.path.join
-env = os.environ
+from Cython.Build import cythonize
+from setuptools import Extension, setup
 
 v_file = "_version.py"
 version = "0.9"
@@ -39,9 +30,9 @@ data_dir = "data"
 converters_dir = "converters"
 
 khoca_pkg = "khoca"
-bin_pkg = join(khoca_pkg, bin_dir)
-data_pkg = join(khoca_pkg, data_dir)
-converters_pkg = join(khoca_pkg, converters_dir)
+bin_pkg = ".".join([khoca_pkg, bin_dir])
+data_pkg = ".".join([khoca_pkg, data_dir])
+converters_pkg = ".".join([khoca_pkg, converters_dir])
 
 pui_name = "khoca.bin.pui"
 
@@ -63,8 +54,8 @@ if Linux:
 
 elif MacOS:
     locdir = "Pari42"
-    pari_include_dir = join(locdir, "include")
-    pari_library_dir = join(locdir, "lib")
+    pari_include_dir = os.path.join(locdir, "include")
+    pari_library_dir = os.path.join(locdir, "lib")
     homebrew_lib = "/opt/homebrew/lib/"
     include_dirs += [
         "/opt/homebrew/opt/libomp/include",
@@ -89,8 +80,8 @@ elif MacOS:
 
 elif Windows:
     locdir = "Pari42"
-    pari_include_dir = join(locdir, "include")
-    pari_library_dir = join(locdir, "bin")
+    pari_include_dir = os.path.join(locdir, "include")
+    pari_library_dir = os.path.join(locdir, "bin")
     gmp_include_dir = r"C:\msys64\usr\include"
     gmp_library_dir = r"C:\msys64\mingw64\lib"
     gmp_library_dir_bin = r"C:\msys64\mingw64\bin"
@@ -99,62 +90,53 @@ elif Windows:
     library_dirs += [gmp_library_dir, gmp_library_dir_bin, pari_library_dir]
     extra_compile_args += ["/DDISABLE_INLINE", "/openmp", "/std:c11", "/LD"]
     extra_link_args = [
-        join(gmp_library_dir, "libgmp.dll.a"),
-        join(gmp_library_dir, "libgmpxx.dll.a"),
-        join(pari_library_dir, "libpari.dll.a"),
+        os.path.join(gmp_library_dir, "libgmp.dll.a"),
+        os.path.join(gmp_library_dir, "libgmpxx.dll.a"),
+        os.path.join(pari_library_dir, "libpari.dll.a"),
     ]
 
-def local_scheme(version):
-    return ""
+pui_sources = [
+    "src/krasner/krasner.cpp",
+    "src/planar_algebra/coefficient_rings.cpp",
+    "src/planar_algebra/planar_algebra.cpp",
+    "src/planar_algebra/smith.cpp",
+    "src/planar_algebra/sparsemat.cpp",
+    "src/python_interface/pythonInterface.cpp",
+    "src/python_interface/pui.pyx",
+    "src/shared.cpp",
+]
 
-def collect_source(path, pattern, depth=0):
-    """
-    Find all files with the given extension under path.
-    """
-    result = []
-    for l in range(depth + 1):
-        path_components = path.split("/") + l * ["*"] + [pattern]
-        result += glob.glob(join(*path_components))
-    return result
-
-def create_extension(name, sources, include_dirs):
-    return Extension(
-        name,
-        sources=sources,
-        language="c++",
-        include_dirs=include_dirs,
-        library_dirs=library_dirs,
-        extra_objects=extra_objects,
-        extra_compile_args=extra_compile_args,
-        libraries=libraries,
-        extra_link_args=extra_link_args,
-    )
-
-template_cpp_files = collect_source("", "*Templates.cpp", depth=2)
-cpp_files_with_templ = collect_source("", "*.cpp", depth=2)
-cpp_files = [cpp for cpp in cpp_files_with_templ if cpp not in template_cpp_files]
-
-data_files = collect_source("data/", "*")
-
-print("cpp_files:", cpp_files)
-print("data_files:", data_files)
-
-include_dirs += ["", "python_interface", "planar_algebra", "krasner"]
-
-pui_ext = create_extension(pui_name, cpp_files, include_dirs)
+pui_ext = Extension(
+    name=pui_name,
+    sources=pui_sources,
+    language="c++",
+    include_dirs=include_dirs,
+    library_dirs=library_dirs,
+    extra_objects=extra_objects,
+    extra_compile_args=extra_compile_args,
+    libraries=libraries,
+    extra_link_args=extra_link_args,
+)
 
 setup(
     name=khoca_pkg,
     version=version,
-    zip_safe=False,
-    packages=[khoca_pkg, bin_pkg, converters_pkg, data_pkg],
+    packages=[
+        khoca_pkg,
+        bin_pkg,
+        converters_pkg,
+        data_pkg,
+    ],
     package_dir={
         khoca_pkg: khoca_dir,
         bin_pkg: bin_dir,
         converters_pkg: converters_dir,
         data_pkg: data_dir,
     },
-    ext_modules=[pui_ext] + cythonize("src/python_interface/pui.pyx"),
-    package_data={khoca_pkg: data_files},
-    install_requires=[],
+    ext_modules=cythonize(
+        pui_ext,
+    ),
+    package_data={
+        data_pkg: ["*"],
+    },
 )

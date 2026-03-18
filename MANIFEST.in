@@ -1,1 +1,8 @@
-include data/ src/*/*.h src/*.h src/*/*.cpp src/*/*.pyx
+# Not pulled in by `setup.py`
+include src/**/*.h
+
+# The template files are not pulled in by `setup.py`
+include src/**/*.cpp
+
+# Rebuilt by Cython
+exclude src/python_interface/pui.cpp
