@@ -36,6 +36,10 @@ classifiers = [
 Homepage = "https://people.math.ethz.ch/~llewark/khoca.php"
 Repository = "https://github.com/llewark/khoca/"
 
+[project.scripts]
+khoca = "khoca.khoca:main"
+montesinos = "khoca.converters.montesinos:main"
+
 [tool.cibuildwheel]
 build = ["cp3*"]
 archs = ["auto64"]
