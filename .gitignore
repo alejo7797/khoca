@@ -1,12 +1,24 @@
-__pycache__
+# Direnv cache
+.direnv
+
+# Python outputs
+dist
 *.egg-info
-bin/pui.so
-src/krasner/krasner.o
-src/planar_algebra/coefficient_rings.o
-src/planar_algebra/planar_algebra.o
-src/planar_algebra/smith.o
-src/planar_algebra/sparsemat.o
-src/python_interface/pui.cpp
-src/python_interface/pui.o
-src/python_interface/pythonInterface.o
-src/shared.o
+
+# Python cache
+__pycache__
+
+# Python venv
+.venv
+
+# Nix outputs
+result
+result-*
+
+# Clangd state files
+.cache/clangd
+compile_commands.json
+
+# Meson outputs
+build
+.mesonpy-*
