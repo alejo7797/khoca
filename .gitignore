@@ -1,4 +1,5 @@
-bin/__pycache__/
+__pycache__
+*.egg-info
 bin/pui.so
 src/krasner/krasner.o
 src/planar_algebra/coefficient_rings.o

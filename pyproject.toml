@@ -1,13 +1,16 @@
 [build-system]
 requires = [
-    "cython",
-    "setuptools",
-    "wheel"
+  "cython",
+  "setuptools",
 ]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "khoca"
+dynamic = ["version"]
+dependencies = [
+  "py",
+]
 authors = [
   {name = "Lukas Lewark", email = "lukas.lewark@math.ethz.ch"},
   {name = "Sebastian Oehms", email = "seb.oehms@gmail.com"}
@@ -15,23 +18,23 @@ authors = [
 maintainers = [
   {name = "Sebastian Oehms", email = "seb.oehms@gmail.com"}
 ]
-readme = {file = "README.md", content-type = "text/markdown"}
-description = "Khoca as pip installable package"
-keywords = ["Knot theory, Khovanov homology"]
+description = "Calculate sl_N homology of knots"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+license-files = ["COPYING"]
+keywords = ["Knot theory", "Khovanov homology"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Science/Research",
-    "Operating System :: POSIX :: Linux",
-    "Programming Language :: C++",
-    "Programming Language :: Python",
-    "Programming Language :: Cython",
-    "Topic :: Scientific/Engineering :: Mathematics"
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: C++",
+  "Programming Language :: Python",
+  "Programming Language :: Cython",
+  "Topic :: Scientific/Engineering :: Mathematics"
 ]
-dynamic = ["version", "license"]
 
 [project.urls]
 Homepage = "https://people.math.ethz.ch/~llewark/khoca.php"
-Repository = "https://github.com/soehms/khoca/"
+Repository = "https://github.com/llewark/khoca/"
 
 [tool.cibuildwheel]
 build = ["cp3*"]

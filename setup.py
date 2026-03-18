@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
-# A packaging of Khoca that allows easy installation using python's pip
+# A packaging of Khoca that allows easy installation using pip.
 #
 # Sebastian Oehms, 09/24/2021
 # seb.oehms@gmail.com
 #
-# Run "python setup.py package" and it will automatically download all the
+# Run `python -m build` and it will automatically download all the
 # necessary sources and create a tar ball suitable for pip.
 #
-# We can upload with "twine upload -r pypi khoca-...tar.gz"
+# We can upload with `twine upload -r pypi dist/khoca-...tar.gz`.
 
 import glob, os
 
@@ -65,7 +65,7 @@ elif MacOS:
     locdir = "Pari42"
     pari_include_dir = join(locdir, "include")
     pari_library_dir = join(locdir, "lib")
-    hombrew_lib = "/opt/homebrew/lib/"
+    homebrew_lib = "/opt/homebrew/lib/"
     include_dirs += [
         "/opt/homebrew/opt/libomp/include",
         "/opt/homebrew/include/",
@@ -73,7 +73,7 @@ elif MacOS:
     ]
     library_dirs += [
         "/opt/homebrew/opt/libomp/lib",
-        hombrew_lib,
+        homebrew_lib,
         pari_library_dir,
     ]
     extra_compile_args += [
@@ -136,8 +136,8 @@ cpp_files = [cpp for cpp in cpp_files_with_templ if cpp not in template_cpp_file
 
 data_files = collect_source("data/", "*")
 
-print("cpp_files", cpp_files)
-print("data_files", data_files)
+print("cpp_files:", cpp_files)
+print("data_files:", data_files)
 
 include_dirs += ["", "python_interface", "planar_algebra", "krasner"]
 
@@ -146,7 +146,6 @@ pui_ext = create_extension(pui_name, cpp_files, include_dirs)
 setup(
     name=khoca_pkg,
     version=version,
-    license="GPLv2+",
     zip_safe=False,
     packages=[khoca_pkg, bin_pkg, converters_pkg, data_pkg],
     package_dir={
@@ -157,6 +156,5 @@ setup(
     },
     ext_modules=[pui_ext] + cythonize("src/python_interface/pui.pyx"),
     package_data={khoca_pkg: data_files},
-    include_package_data=True,
     install_requires=[],
 )
