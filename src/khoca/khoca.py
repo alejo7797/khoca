@@ -24,18 +24,17 @@
 # The main work is done by pui.pyx, which is called by this file.
 
 import math
-import os.path
 import random
 import re
 import sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "bin"))
+from khoca.bin import (
+    BraidToMyPD,
+    KrasnerGaussToMyPDLib,
+    pseudoBraidToKrasnerGaussLib,
+)
 
-import BraidToMyPD
-import KrasnerGaussToMyPDLib
-import pseudoBraidToKrasnerGaussLib
-
-from pui import (
+from khoca.bin.pui import (
     pCalcSubTangleTree,
     pCalculateHomology,
     pGlueReduced,

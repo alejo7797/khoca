@@ -26,9 +26,9 @@
 # Output is a list of signed integers representing the Krasner Gauss
 # encoding of knot (so the output may be fed to KrasnerGaussToMyPD.py).
 
-import sys, re
-sys.path.append('.')
-import pseudoBraidToKrasnerGaussLib
+import re
+import sys
+from khoca.bin import pseudoBraidToKrasnerGaussLib
 
 if len(sys.argv) != 2:
 	print("Expecting one argument.")

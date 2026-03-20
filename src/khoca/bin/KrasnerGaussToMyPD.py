@@ -28,9 +28,9 @@
 # To compress, drop half of the list items, namely for each
 # connection the higher number. The encoding remains injective.
 
-import sys, re
-sys.path.append('.')
-import KrasnerGaussToMyPDLib
+import re
+import sys
+from khoca.bin import KrasnerGaussToMyPDLib
 
 if len(sys.argv) != 2:
 	print("Expecting one argument.")

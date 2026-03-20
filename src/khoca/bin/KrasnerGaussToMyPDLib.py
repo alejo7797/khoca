@@ -19,8 +19,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import sys, re
-
 def inSublist(x, l):
 	for i in range(len(l)):
 		if x in l[i]:
@@ -38,7 +36,7 @@ def splitSublist(x, y, l):
 	l.pop(i)
 	l.append(new1)
 	l.append(new2)
-	
+
 def KrasnerGaussToMyPDmain(gauss):
 	tmp = list(range(1, 2 * len(gauss) + 1))
 	decompressed_gauss = [0] * 2 * len(gauss)
@@ -56,14 +54,14 @@ def KrasnerGaussToMyPDmain(gauss):
 		tmp = tmp[1:]
 		tmp.remove(abs(i))
 	del tmp
-	
+
 	isInside = []
 	for i in range(2 * len(gauss)):
 		isInside.append([True, False])
 	insidePart = [list(range(2 * len(gauss)))]
 	outsidePart = [list(range(2 * len(gauss)))]
 	idle = False
-	
+
 	while not idle:
 		idle = True
 		for i in range(2 * len(gauss)):
@@ -90,23 +88,23 @@ def KrasnerGaussToMyPDmain(gauss):
 					splitSublist(i, decompressed_gauss[i], insidePart)
 					idle = False
 					break
-	
+
 	pd = []
-	
+
 	for i in range(len(decompressed_gauss)):
 		x = decompressed_gauss[i]
 		if i < x:
 			toadd = [x, (x + 1) % (2 * len(gauss)), abs(i), (abs(i) + 1) % (2 * len(gauss))]
 			toaddPd1 = [2 * x, 2 * abs(i) + 1, 2 * x + 1, (2 * abs(i) + 2) % (4 * len(gauss))]
 			toaddPd2 = [2 * abs(i), 2 * x + 1, 2 * abs(i) + 1, (2 * x + 2) % (4 * len(gauss))]
-	
+
 			if isInside[i][0] and signs[i]:
 				toaddPd1 = [toaddPd1[0], toaddPd1[3], toaddPd1[2], toaddPd1[1]]
 				toaddPd2 = [toaddPd2[0], toaddPd2[3], toaddPd2[2], toaddPd2[1]]
 			elif isInside[i][0] or signs[i]:
 				toaddPd1 = [toaddPd1[1], toaddPd1[0], toaddPd1[3], toaddPd1[2]]
 				toaddPd2 = [toaddPd2[1], toaddPd2[0], toaddPd2[3], toaddPd2[2]]
-	
+
 			if isInside[i][0]:
 				toadd.reverse()
 			if signs[i]:
@@ -118,5 +116,5 @@ def KrasnerGaussToMyPDmain(gauss):
 			mypd.append(toadd)
 			pd.append(toaddPd1)
 			pd.append(toaddPd2)
-	
+
 	return mypd
