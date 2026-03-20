@@ -320,7 +320,7 @@ class InteractiveCalculator:
 
     def khoca_version(self):
         r"""
-        Return the version if ``Khoca``.
+        Return the version of ``Khoca``.
 
         EXAMPLES::
 
