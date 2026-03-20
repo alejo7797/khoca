@@ -24,7 +24,10 @@ gmp_deps = [
   dependency('gmpxx'),
 ]
 
-pari_dep = cpp.find_library('pari')
+pari_dep = cpp.find_library(
+  'pari',
+  has_headers: ['pari/pari.h']
+)
 
 # Pass -fopenmp
 openmp_dep = dependency('openmp')
