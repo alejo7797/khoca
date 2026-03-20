@@ -21,9 +21,10 @@ py.extension_module(
   sources,
   include_directories: includes,
   dependencies: [
-    gmp,
-    gmpxx,
-    pari
+    gmp_deps,
+    pari_dep,
+    openmp_dep,
+    thread_dep
   ],
   override_options: [
     'cython_language=cpp'

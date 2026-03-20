@@ -1,10 +1,6 @@
 # Direnv cache
 .direnv
 
-# Python outputs
-dist
-*.egg-info
-
 # Python cache
 __pycache__
 
@@ -17,8 +13,3 @@ result-*
 
 # Clangd state files
 .cache/clangd
-compile_commands.json
-
-# Meson outputs
-build
-.mesonpy-*
