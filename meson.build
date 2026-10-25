@@ -1,7 +1,7 @@
 project(
   'khoca',
   'cpp', 'cython',
-  version: '1.5',
+  version: '1.6.beta5',
   default_options: ['cpp_std=c++11'],
   meson_version: '>=1.10.2',
 )
