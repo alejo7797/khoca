@@ -1,0 +1,20 @@
+[build-system]
+build-backend = 'mesonpy'
+requires = ['meson-python', 'cython']
+
+[project]
+name = 'khoca'
+version = '1.0'
+description = 'Calculate sl_N homology of knots'
+readme = 'README.md'
+license = 'GPL-3.0-or-later'
+license-files = ['COPYING']
+authors = [
+  {name  = 'Lukas Lewark', email = 'lukas.lewark@math.ethz.ch'},
+]
+
+[project.urls]
+Homepage = 'https://people.math.ethz.ch/~llewark/khoca.php'
+
+[project.scripts]
+khoca = 'khoca:main'
