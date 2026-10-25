@@ -107,8 +107,6 @@ void calculateSmithFriend(const Complex<cobordism_tpl>& that,
                 qMins.at(k - that.vecTangles.begin()),
                 idxTranslators.at(k - that.vecTangles.begin()),
                 qtDims.at(k - that.vecTangles.begin()));
-        qMaxs.at(k - that.vecTangles.begin());
-        qMins.at(k - that.vecTangles.begin());
     }
     s << "[";
     const char* comma = "";
