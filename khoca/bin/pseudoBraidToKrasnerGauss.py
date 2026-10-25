@@ -27,8 +27,7 @@
 # encoding of knot (so the output may be fed to KrasnerGaussToMyPD.py).
 
 import sys, re
-sys.path.append('.')
-import pseudoBraidToKrasnerGaussLib
+from . import pseudoBraidToKrasnerGaussLib
 
 if len(sys.argv) != 2:
 	print("Expecting one argument.")

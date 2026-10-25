@@ -29,8 +29,7 @@
 # connection the higher number. The encoding remains injective.
 
 import sys, re
-sys.path.append('.')
-import KrasnerGaussToMyPDLib
+from . import KrasnerGaussToMyPDLib
 
 if len(sys.argv) != 2:
 	print("Expecting one argument.")

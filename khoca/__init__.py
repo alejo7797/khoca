@@ -24,15 +24,13 @@
 # The main work is done by pui.pyx, which is called by this file.
 
 import sys
-sys.path.insert(0, './bin/')
 
-from pui import pCalcSubTangleTree, pCalculateHomology, pGlueReduced, pCopyHomology, pFirstFreeIdx, pSaveComplexToFile, pDeleteComplex, pLoadComplexFromFile, pSum, pDual, pDeleteNonIsos, pResetSimplificationsCounter, pReducify, pIniStack, pSetRoot, pPrintHomology, pPrintCompileInfo, pCalculateEquiHomology
+from khoca.pui import pCalcSubTangleTree, pCalculateHomology, pGlueReduced, pCopyHomology, pFirstFreeIdx, pSaveComplexToFile, pDeleteComplex, pLoadComplexFromFile, pSum, pDual, pDeleteNonIsos, pResetSimplificationsCounter, pReducify, pIniStack, pSetRoot, pPrintHomology, pPrintCompileInfo, pCalculateEquiHomology
 import random
 import re
 import math
 
-sys.path.append('.')
-import KrasnerGaussToMyPDLib, pseudoBraidToKrasnerGaussLib, BraidToMyPD
+from khoca.bin import KrasnerGaussToMyPDLib, pseudoBraidToKrasnerGaussLib, BraidToMyPD
 
 
 debugging = False
@@ -411,10 +409,12 @@ def parseOptions(argv):
 HELP_TEXT = "Expecting at least three arguments:\n(1) The coefficient ring; 0 for integers, 1 for rationals, a prime p for the finite field with p elements,\n(2) the vector [a_0, ... a_{N-1}] defining the Frobenius algebra F[X]/(X^N+a_{N-1}X^{N-1}+...+a_0) or e followed by the number N for equivariant,\n(3) a root of the polynomial given in (2).\nAny following argument is interpreted as command. For example,\n./khoca.py 0 0.0 0 braidaBaB calc0\ncomputes integral Khovanov sl(2)-homology of the figure-eight knot.\nRefer to the README file or to http://lewark.de/lukas/khoca.html for more detailed help."
 verbose = 0
 progress = 0
-a = parseOptions(sys.argv)
 
-if (verbose):
-    pPrintCompileInfo()
-    sys.stderr.write(("Multithreading with " + str(NUM_THREADS) + " threads.\n") if (NUM_THREADS > 1) else "No multithreading.\n")
+def main():
+    a = parseOptions(sys.argv)
 
-run_commandline(a, print, progress)
+    if (verbose):
+        pPrintCompileInfo()
+        sys.stderr.write(("Multithreading with " + str(NUM_THREADS) + " threads.\n") if (NUM_THREADS > 1) else "No multithreading.\n")
+
+    run_commandline(a, print, progress)

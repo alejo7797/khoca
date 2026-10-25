@@ -1,5 +1,5 @@
-bin/__pycache__/
-bin/pui.so
+khoca/**/__pycache__
+khoca/*.so
 src/krasner/krasner.o
 src/planar_algebra/coefficient_rings.o
 src/planar_algebra/planar_algebra.o

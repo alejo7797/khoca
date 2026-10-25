@@ -41,7 +41,7 @@ PYI=src/python_interface/pythonInterface.cpp
 PYIO=src/python_interface/pythonInterface.o
 SOURCES=src/planar_algebra/planar_algebra.cpp src/shared.cpp src/krasner/krasner.cpp src/planar_algebra/sparsemat.cpp src/planar_algebra/coefficient_rings.cpp src/planar_algebra/smith.cpp src/planar_algebra/coefficient_rings_explicitTemplates.cpp
 OBJECTS=src/planar_algebra/planar_algebra.o src/shared.o src/krasner/krasner.o src/planar_algebra/sparsemat.o src/planar_algebra/coefficient_rings.o src/planar_algebra/smith.o
-EXECUTABLE=bin/pui.so
+EXECUTABLE=khoca/pui.so
 
 
 .PHONY : clean
