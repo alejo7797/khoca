@@ -25,6 +25,7 @@
 #
 #  Details 22.
 
+import importlib.resources
 import sys
 from ctypes import *
 from libcpp.vector cimport vector
@@ -242,15 +243,12 @@ def pCalcSubTangleTree(s, num_threads, progress):
 def loadType(idx, typeIdx):
 	global stack
 	cdef string s
-	if (typeIdx == 0):
-		s = b"data/KrasnerPlus.bin"
-	elif (typeIdx == 1):
-		s = b'data/KrasnerMinus.bin'
-	elif (typeIdx == 2):
-		s = b'data/KhovanovPlus.bin'
-	elif (typeIdx == 3):
-		s = b'data/KhovanovMinus.bin'
+	data_files = ["KrasnerPlus.bin", "KrasnerMinus.bin", "KhovanovPlus.bin", "KhovanovMinus.bin"]
+
+	if (0 <= typeIdx < 4):
+		with importlib.resources.path("khoca", "data", data_files[typeIdx]) as p:
+			s = bytes(p)
+			stack.loadComplexFromFile(idx, s, 0)
 	else:
 		print("Unknown type: " + str(typeIdx))
 		sys.exit()
-	stack.loadComplexFromFile(idx, s, 0)
