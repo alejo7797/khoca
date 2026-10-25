@@ -4,7 +4,7 @@ requires = ['meson-python', 'cython']
 
 [project]
 name = 'khoca'
-version = '1.0'
+version = '1.5'
 description = 'Calculate sl_N homology of knots'
 readme = 'README.md'
 license = 'GPL-3.0-or-later'
