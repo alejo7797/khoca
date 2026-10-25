@@ -1,11 +1,3 @@
-khoca/**/__pycache__
-khoca/*.so
-src/krasner/krasner.o
-src/planar_algebra/coefficient_rings.o
-src/planar_algebra/planar_algebra.o
-src/planar_algebra/smith.o
-src/planar_algebra/sparsemat.o
-src/python_interface/pui.cpp
-src/python_interface/pui.o
-src/python_interface/pythonInterface.o
-src/shared.o
+/build
+/dist
+__pycache__
